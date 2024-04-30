@@ -1,4 +1,4 @@
-# A Simple Shopping Cart
+# GROUP SAVINGS PLAN
 
 ## Description
 A simple savings plan backend system built in Typescrpt that allows users create saving plans and invite registered friends to join.
