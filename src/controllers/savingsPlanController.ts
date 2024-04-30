@@ -19,6 +19,17 @@ const savingsPlanController = {
         const { userId } = req.body.userId;
       const { planId } = req.params;
 
+      const plan = await savingsPlanService.getPlanById(parseInt(planId, 10));
+    if (!plan) {
+      res.status(404).json({ message: 'Savings plan not found' });
+      return;
+    }
+
+      if (plan.user && plan.user.id === userId) {
+        res.status(400).json({ message: 'User is already part of the savings plan' });
+        return;
+      }
+
       await savingsPlanService.joinPlan(userId, parseInt(planId, 10));
       res.status(200).json({ message: 'Successfully joined savings plan' });
     } catch (error) {
@@ -39,6 +50,23 @@ const savingsPlanController = {
       res.status(500).json({ message: 'Internal server error' });
     }
   },
+
+    getPlanById: async (req: Request, res: Response): Promise<void> => {
+        try {
+        const { planId } = req.params;
+    
+        const plan = await savingsPlanService.getPlanById(parseInt(planId, 10));
+        if (!plan) {
+            res.status(404).json({ message: 'Savings plan not found' });
+            return;
+        }
+    
+        res.status(200).json(plan);
+        } catch (error) {
+        console.error('Error getting savings plan by ID:', error);
+        res.status(500).json({ message: 'Internal server error' });
+        }
+    },
 };
 
 export default savingsPlanController;
