@@ -7,7 +7,7 @@ import * as config from "../ormconfig.json";
 
 
 import authRoutes from './routes/authRoutes';
-//import userRoutes from './routes/userRoutes';
+import userRoutes from './routes/userRoutes';
 import savingsPlanRoutes from './routes/savingsPlanRoutes';
 
 const app = express();
@@ -18,7 +18,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
-//app.use('/api/user', userRoutes);
+app.use('/api/user', userRoutes);
 app.use('/api/savings-plan', savingsPlanRoutes);
 
 // Start server
