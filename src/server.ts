@@ -2,12 +2,13 @@
 import express from 'express';
 import { DataSourceOptions, createConnection } from 'typeorm';
 import { User } from "./entities/User";
+import { SavingsPlan } from "./entities/SavingsPlan";
 import * as config from "../ormconfig.json";
 
 
 import authRoutes from './routes/authRoutes';
 //import userRoutes from './routes/userRoutes';
-//import savingsPlanRoutes from './routes/savingsPlanRoutes';
+import savingsPlanRoutes from './routes/savingsPlanRoutes';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,7 +19,7 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRoutes);
 //app.use('/api/user', userRoutes);
-//app.use('/api/savings-plan', savingsPlanRoutes);
+app.use('/api/savings-plan', savingsPlanRoutes);
 
 // Start server
 app.listen(PORT, async () => {
@@ -28,7 +29,7 @@ app.listen(PORT, async () => {
   try {
     await createConnection({
       ...(config as DataSourceOptions),
-      entities: [User],
+      entities: [User, SavingsPlan],
     })
     console.log('Connected to the database');
   } catch (error) {
