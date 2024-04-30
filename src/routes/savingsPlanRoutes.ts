@@ -6,5 +6,5 @@ const router = express.Router();
 router.post('/create', savingsPlanController.createPlan);
 router.post('/:planId/join', savingsPlanController.joinPlan);
 router.post('/:planId/decline', savingsPlanController.declineInvite);
-
+router.get('/:planId', savingsPlanController.getPlanById);
 export default router;
