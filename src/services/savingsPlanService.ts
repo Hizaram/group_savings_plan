@@ -50,6 +50,7 @@ const savingsPlanService = {
       } else {
         throw new Error('User not found');
       }
+      
       const isMember = plan.user.id === user.id;
       if (isMember) {
         throw new Error('User is already part of the savings plan');
@@ -92,6 +93,21 @@ const savingsPlanService = {
         }
       }
   },
+
+    getPlanById: async (planId: number): Promise<SavingsPlan | undefined | null> => {
+        try {
+        const savingsPlanRepository = getRepository(SavingsPlan);
+        const plan = await savingsPlanRepository.findOne({ where: { id: planId } });
+    
+        return plan;
+        } catch (error) {
+            if (error instanceof Error) {
+            throw new Error('Error getting savings plan: ' + error.message);
+            } else {
+            throw new Error('Error getting savings plan');
+            }
+        }
+    },
 };
 
 export default savingsPlanService;
